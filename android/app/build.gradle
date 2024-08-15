@@ -86,14 +86,19 @@ android {
     signingConfigs {
       release {
         storeFile file('your_key_name.keystore')
-        storePassword System.console().readLine("\nKeystore password:")
-        keyAlias System.console().readLine("\nAlias: ")
-        keyPassword System.console().readLine("\Alias password: ")
+        // storePassword System.console().readLine("Keystore password:")
+        // keyAlias System.console().readLine("\nAlias:")
+        // keyPassword System.console().readLine("\nAlias password:")
+        println "Enter keystore password"
+        storePassword System.in.newReader().readLine()
+       println "Enter key password"
+       keyPassword System.in.newReader().readLine()
+       println "Enter keyalias"
+       keyAlias System.in.newReader().readLine()
       }
     }
     buildTypes {
       release {
-        ....
         signingConfig signingConfigs.release
       }
     }

@@ -1,16 +1,23 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {s, ms, vs} from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlay} from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import TrackPlayer, {Track} from 'react-native-track-player';
 
-const RecentlyPlayed = () => {
+const RecentlyPlayed = ({track}: {track: Track}) => {
+  const playSong = async () => {
+    await TrackPlayer.skip(track?.index);
+    await TrackPlayer.play();
+  };
+
   return (
     <View style={styles.container}>
       <Image
         source={{
-          uri: 'https://wallpaperaccess.com/full/6852770.jpg',
+          uri: track.artwork,
         }}
         style={styles.coverImg}
       />
@@ -22,9 +29,9 @@ const RecentlyPlayed = () => {
         ]}
         style={styles.btnContainer}>
         <Text style={styles.songName} numberOfLines={1}>
-          Rattan Lambiya ( Tanishk Bagchi , Javed Mohsin)
+          {track.title}
         </Text>
-        <TouchableOpacity style={styles.playBtn}>
+        <TouchableOpacity style={styles.playBtn} onPress={playSong}>
           <FontAwesomeIcon icon={faPlay} color="#FBFBFB" size={ms(15)} />
           <Text style={styles.btnText}>Listen now</Text>
         </TouchableOpacity>
